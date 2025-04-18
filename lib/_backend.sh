@@ -104,6 +104,10 @@ backend_node_dependencies() {
 
   sudo su - deploy <<EOF
   cd /home/deploy/${instancia_add}/backend
+  apt install npm
+  npm cache clean -f
+  npm install -g n
+  n stable
   npm install
 EOF
 
