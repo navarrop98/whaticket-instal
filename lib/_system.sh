@@ -537,3 +537,27 @@ system_certbot_setup() {
 
   sleep 2
 }
+
+backend_logs() {
+  print_banner
+  printf "${WHITE} 💻 Logs Backend...${GRAY_LIGHT}"
+  printf "\n\n"
+
+  sleep 2
+
+  pm2 logs $(echo "$instancia_add")-backend
+
+  sleep 2
+}
+
+frontend_logs() {
+  print_banner
+  printf "${WHITE} 💻 Logs Frontend...${GRAY_LIGHT}"
+  printf "\n\n"
+
+  sleep 2
+
+  pm2 logs $(echo "$instancia_add")-frontend
+
+  sleep 2
+}

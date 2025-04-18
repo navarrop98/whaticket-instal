@@ -231,6 +231,16 @@ software_certbot() {
   system_certbot_setup
 }
 
+software_logs_backend() {
+  get_instancia_add
+  backend_logs
+}
+
+software_logs_frontend() {
+  get_instancia_add
+  frontend_logs
+}
+
 inquiry_options() {
   
   print_banner
@@ -243,6 +253,8 @@ inquiry_options() {
   printf "   [4] Desbloquear Chasap\n"
   printf "   [5] Cambiar dominio Chasap\n"
   printf "   [6] Reinstalar Certificado Certbot\n"
+  printf "   [7] Revisar Logs Backend\n"
+  printf "   [8] Revisar Logs Frontend\n"
   printf "\n"
   read -p "> " option
 
@@ -272,6 +284,14 @@ inquiry_options() {
       ;;        
     6) 
       software_certbot
+      exit
+      ;;   
+    7) 
+      software_logs_backend
+      exit
+      ;;   
+    8) 
+      software_logs_frontend
       exit
       ;;      
     *) exit ;;
