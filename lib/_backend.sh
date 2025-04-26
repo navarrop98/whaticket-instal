@@ -108,7 +108,7 @@ backend_node_dependencies() {
   npm cache clean -f
   npm install -g n
   n stable
-  npm install
+  npm install --loglevel=error
 EOF
 
   sleep 2
@@ -151,9 +151,9 @@ backend_update() {
   pm2 stop ${empresa_atualizar}-backend
   git pull
   cd /home/deploy/${empresa_atualizar}/backend
-  npm install
+  npm install --loglevel=error
   npm update -f
-  npm install @types/fs-extra
+  npm install @types/fs-extra --loglevel=error
   rm -rf dist 
   npm run build
   npx sequelize db:migrate
@@ -172,18 +172,23 @@ EOF
 #######################################
 backend_db_migrate() {
   print_banner
-  printf "${WHITE} 💻 Ejecutando db:migrate...${GRAY_LIGHT}"
-  printf "\n\n"
+  printf "${WHITE} 💻 Ejecutando db:migrate...${GRAY_LIGHT}\n\n"
 
   sleep 2
 
-  sudo su - deploy <<EOF
-  cd /home/deploy/${instancia_add}/backend
-  npx sequelize db:migrate
-EOF
+  sudo -u deploy bash -c "
+    cd /home/deploy/${instancia_add}/backend && (
+      npx sequelize db:migrate || (
+        echo '⚠️ Falló el primer intento, reintentando en 5 segundos...' &&
+        sleep 5 &&
+        npx sequelize db:migrate
+      )
+    )
+  "
 
   sleep 2
 }
+
 
 #######################################
 # Ejecuta db:seed
