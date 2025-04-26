@@ -101,16 +101,14 @@ backend_node_dependencies() {
 
   sleep 2
 
-  # Primero instalar npm como root
-  sudo apt update
-  sudo apt install -y npm
+  # Primero instalar Node.js y npm bien
+  curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
+  sudo apt-get install -y nodejs
 
   # Luego como usuario deploy hacer el resto
   sudo -u deploy bash -c "
     cd /home/deploy/${instancia_add}/backend &&
     npm cache clean -f &&
-    npm install -g n &&
-    n stable &&
     npm install --loglevel=error
   "
 
