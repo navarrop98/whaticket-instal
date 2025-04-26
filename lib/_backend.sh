@@ -97,22 +97,26 @@ EOF
 #######################################
 backend_node_dependencies() {
   print_banner
-  printf "${WHITE} 💻 Instalando dependencias del backend...${GRAY_LIGHT}"
-  printf "\n\n"
+  printf "${WHITE} 💻 Instalando dependencias del backend...${GRAY_LIGHT}\n\n"
 
   sleep 2
 
-  sudo su - deploy <<EOF
-  cd /home/deploy/${instancia_add}/backend
-  apt install npm
-  npm cache clean -f
-  npm install -g n
-  n stable
-  npm install --loglevel=error
-EOF
+  # Primero instalar npm como root
+  sudo apt update
+  sudo apt install -y npm
+
+  # Luego como usuario deploy hacer el resto
+  sudo -u deploy bash -c "
+    cd /home/deploy/${instancia_add}/backend &&
+    npm cache clean -f &&
+    npm install -g n &&
+    n stable &&
+    npm install --loglevel=error
+  "
 
   sleep 2
 }
+
 
 #######################################
 # Compila el código del backend
