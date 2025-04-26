@@ -32,13 +32,12 @@ Antes de proceder con la instalación, asegúrate de tener acceso a un servidor 
     sudo ./install_primaria
     ```
 
-** O EN UNA SOLA LINEA TODO**
+**O EN UNA SOLA LINEA TODO**
 
-    ```bash
     git clone https://github.com/MinoruMX/install-vps && sudo chmod -R 777 install-vps && cd install-vps && sudo ./install_primaria
-    ```
 
 Este script se encargará de instalar y configurar los componentes necesarios para que puedas usar Chasap en tu VPS.
+
 
 ## Notas adicionales
 
