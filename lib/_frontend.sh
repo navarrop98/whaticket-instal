@@ -36,7 +36,7 @@ frontend_node_build() {
 
   sudo su - deploy <<EOF
   cd /home/deploy/${instancia_add}/frontend
-  npm run build
+  export NODE_OPTIONS=--openssl-legacy-provider && npm run build
 EOF
 
   sleep 2
